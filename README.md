@@ -10,7 +10,7 @@ Promise 是异步编程新的解决方案
 
 Promise 对象是一个代理对象（代理一个值），被代理的值在 Promise 对象创建时可能是未知的。
 
-![](promises.png)
+![](pic/promises.png)
 
 ## why
 
