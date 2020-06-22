@@ -36,7 +36,7 @@
       console.log(`catch ${reason}`);
     })
 
-    console.log('===========================================================');
+
 
     const p1 = Promise.resolve(2);
     const p2 = Promise.resolve(Promise.resolve(3));
@@ -64,7 +64,7 @@
       }
     );
 
-    console.log('===========================================================');
+
 
     //const pRace = Promise.race([p1,p2]);
     const pRace = Promise.race([p1, p2, p3]);
