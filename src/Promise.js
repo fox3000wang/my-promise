@@ -161,7 +161,32 @@
     });
   };
 
-  Promise.all = function (promises) {};
+  /*
+  函数对象的all方法
+  传入一个promise数组
+  返回一个value的数组
+  */
+  Promise.all = function (promises) {
+    const values = new Array(promises.length);
+    let counter = 0;
+
+    return new Promise((resolve, reject) => {
+      promises.forEach((p, i) => {
+        p.then(
+          value => {
+            ++counter;
+            values[i] = value;
+            if (counter === promises.length) {
+              resolve(values);
+            }
+          },
+          reason => {
+            reject(reason);
+          }
+        );
+      });
+    });
+  };
 
   Promise.race = function (promises) {};
 
