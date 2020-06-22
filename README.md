@@ -2,6 +2,10 @@
 
 ## 描述 定义
 
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
 Promise 是异步编程新的解决方案
 
 封装异步操作并可以获取结果
