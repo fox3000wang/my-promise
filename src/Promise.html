@@ -6,17 +6,31 @@
 
 <body>
   <script>
-    const p = new Promise((resolve, reject) => {
+    const p1 = new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(1);
       }, 100);
     });
-    p.then(
+    const p2 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(2);
+      }, 100);
+    });
+
+    p1.then(
       value => {
         console.log('onResolved1', value);
       },
       reason => {
-        console.log('onRejected1', value);
+        console.log('onRejected1', reason);
+      }
+    );
+    p2.then(
+      value => {
+        console.log('onResolved2', value);
+      },
+      reason => {
+        console.log('onRejected2', reason);
       }
     );
   </script>
