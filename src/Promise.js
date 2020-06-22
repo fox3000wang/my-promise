@@ -7,6 +7,7 @@
    * @param {*} excuter 执行器函数(同步执行)
    */
   function Promise(excuter) {
+    const self = this;
     // 状态, 初始值是'pengding'
     this.status = "pengding";
     // 数据
@@ -15,17 +16,20 @@
     this.callbacks = [];
 
     function resolve(value) {
+      if (self.status !== "pengding") {
+        return;
+      }
       // 状态改为resolved
-      this.status = `resolved`;
+      self.status = "resolved";
 
       // 保留value的值
-      this.data = value;
+      self.data = value;
 
       // 如果有待执行callback函数，立即异步执行回调函数onResolved
-      if (this.callbacks.length > 0) {
+      if (self.callbacks.length > 0) {
         // 放入队列中执行所有成功的回调
         setTimeout(() => {
-          this.callbacks.forEach((callbacksObj) => {
+          self.callbacks.forEach((callbacksObj) => {
             callbacksObj.onResolved(value);
           });
         });
@@ -33,20 +37,20 @@
     }
 
     function reject(reason) {
-      if (this.status !== "pengding") {
+      if (self.status !== "pengding") {
         return;
       }
       // 状态改为resolved
-      this.status = `rejected`;
+      self.status = "rejected";
 
       // 保留value的值
-      this.data = reason;
+      self.data = reason;
 
       // 如果有待执行callback函数，立即异步执行回调函数onRejected
-      if (this.callbacks.length > 0) {
+      if (self.callbacks.length > 0) {
         // 放入队列中执行所有失败的回调
         setTimeout(() => {
-          this.callbacks.forEach((callbacksObj) => {
+          self.callbacks.forEach((callbacksObj) => {
             callbacksObj.onRejected(reason);
           });
         });
@@ -57,7 +61,9 @@
   }
 
   // 原型对象then
-  Promise.prototype.then = function (onResolved, onRejected) {};
+  Promise.prototype.then = function (onResolved, onRejected) {
+    this.callbacks.push({ onResolved, onRejected });
+  };
 
   // 原型对象catch
   Promise.prototype.catch = function (onRejected) {};

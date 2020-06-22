@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<head>
+  <script src="./Promise.js"></script>
+</head>
+
+<body>
+  <script>
+    const p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(1);
+      }, 100);
+    });
+    p.then(
+      value => {
+        console.log('onResolved1', value);
+      },
+      reason => {
+        console.log('onRejected1', value);
+      }
+    );
+  </script>
+</body>
