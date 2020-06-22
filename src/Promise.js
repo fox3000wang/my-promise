@@ -45,7 +45,7 @@
       if (self.status !== PENGDING) {
         return;
       }
-      // 状态改为resolved
+      // 状态改为rejected
       self.status = REJECTED;
 
       // 保留value的值
@@ -75,7 +75,7 @@
     const self = this;
 
     // 向后传递成功的value
-    onResolved = typeof onRejected === 'function' ? onResolved : value => value;
+    onResolved = typeof onResolved === 'function' ? onResolved : value => value;
 
     // 指定默认的失败回调, 实现异常/错误传透
     onRejected =
@@ -137,9 +137,29 @@
     return this.then(null, onRejected);
   };
 
-  Promise.resolve = function (value) {};
+  /* 
+  函数对象的resolve方法 
+  返回一个promise
+  */
+  Promise.resolve = function (value) {
+    return new Promise((resolve, reject) => {
+      if (value instanceof Promise) {
+        value.then(resolve, reject);
+      } else {
+        resolve(value);
+      }
+    });
+  };
 
-  Promise.reject = function (reason) {};
+  /* 
+  函数对象的reject方法 
+  返回一个失败的promise
+  */
+  Promise.reject = function (reason) {
+    return new Promise((resolve, reject) => {
+      reject(reason);
+    });
+  };
 
   Promise.all = function (promises) {};
 
