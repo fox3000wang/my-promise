@@ -103,7 +103,18 @@ async function = await request(){
 ```shell
 npm init
 
-npm install --dev jest
+yarn add --dev jest
 
-npm install
+yarn add --dev babel-jest @babel/core @babel/preset-env @babel/preset-typescript @types/jest
+
+# 添加配置文件
+touch babel.config.js
+
+# 编辑
+module.exports = {
+  presets: [
+    ['@babel/preset-env', {targets: {node: 'current'}}],
+    '@babel/preset-typescript',
+  ],
+}
 ```
