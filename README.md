@@ -33,14 +33,14 @@ Promise 对象是一个代理对象（代理一个值），被代理的值在 Pr
   - dubug 异常处理很麻烦
 
 ```js
-doSth1((r1) => {
+doSth1(r1 => {
   doSth2(
     r1,
-    (r2) => {
+    r2 => {
       doSth3(
         r2,
-        (r3) => {
-          console("done");
+        r3 => {
+          console('done');
         },
         failureCallack
       );
@@ -52,14 +52,14 @@ doSth1((r1) => {
 
 ```js
 doSth1()
-  .then((r) => {
+  .then(r => {
     return doSth2(r);
   })
-  .then((r2) => {
+  .then(r2 => {
     return doSth3(r2);
   })
-  .then((r3) => {
-    console("done");
+  .then(r3 => {
+    console('done');
   })
   .catch(failureCallack); //异常传透
 ```
@@ -76,4 +76,34 @@ async function = await request(){
     failureCallack(e);
   }
 }
+```
+
+# 异步函数的宏队列和微队列
+
+![](pic/js_async.png)
+
+## 宏队列
+
+- dom 事件回调
+- ajax 事件回调
+- 定时器回调
+
+## 微队列
+
+- Promise 回调
+- MutationObserver 回调
+
+## 流程
+
+- 先执行同步代码
+- 从宏队里里取出任务执行，执行之前都要把微队列里面的任务一个一个取出来执行
+
+# jest 做单元测试
+
+```shell
+npm init
+
+npm install --dev jest
+
+npm install
 ```

@@ -7,9 +7,9 @@
   const RESOLVED = 'resolved';
   const REJECTED = 'rejected';
 
-  /**
+  /*
    * 构造函数
-   * @param {*} excuter 执行器函数(同步执行)
+   * excuter 执行器函数(同步执行)
    */
   function Promise(excuter) {
     const self = this;
@@ -26,7 +26,6 @@
       }
       // 状态改为resolved
       self.status = RESOLVED;
-
       // 保留value的值
       self.data = value;
 
@@ -47,7 +46,6 @@
       }
       // 状态改为rejected
       self.status = REJECTED;
-
       // 保留value的值
       self.data = reason;
 
@@ -61,7 +59,6 @@
         });
       }
     }
-
     excuter(resolve, reject);
   }
 
@@ -70,7 +67,6 @@
     指定成功和失败的回调函数
     返回一个新的Promise对象
    */
-
   Promise.prototype.then = function (onResolved, onRejected) {
     const self = this;
 
@@ -86,9 +82,9 @@
           };
 
     return new Promise((resolve, reject) => {
-      /**
+      /*
        * 调用指定回调函数处理, 根据执行结果改变状态。
-       * @param {*} callback
+       * callback
        */
       function handle(callback) {
         /*
@@ -172,7 +168,8 @@
 
     return new Promise((resolve, reject) => {
       promises.forEach((p, i) => {
-        p.then(
+        // 支持传入的p不是promise
+        Promise.resolve(p).then(
           value => {
             ++counter;
             values[i] = value;
@@ -196,7 +193,7 @@
   Promise.race = function (promises) {
     return new Promise((resolve, reject) => {
       promises.forEach((p, i) => {
-        p.then(
+        Promise.resolve(p).then(
           value => {
             resolve(value);
           },
