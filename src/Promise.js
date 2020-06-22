@@ -188,7 +188,25 @@
     });
   };
 
-  Promise.race = function (promises) {};
+  /*
+  函数对象的rece方法
+  传入一个promise数组
+  返回第一个执行结果
+  */
+  Promise.race = function (promises) {
+    return new Promise((resolve, reject) => {
+      promises.forEach((p, i) => {
+        p.then(
+          value => {
+            resolve(value);
+          },
+          reason => {
+            reject(reason);
+          }
+        );
+      });
+    });
+  };
 
   // 向外暴露Promise
   window.Promise = Promise;
